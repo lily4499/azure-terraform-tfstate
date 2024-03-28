@@ -12,7 +12,7 @@ pipeline {
         stage('Authenticate with Azure') {
             steps {
                 script {
-                    azureLogin(credentialsId: 'your_azure_service_principal_credentials_id')
+                    azureLogin(credentialsId: 'lili-acr-credentials-id')
                 }
             }
         }
