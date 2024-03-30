@@ -45,7 +45,8 @@ pipeline {
             steps {
                 script {
                     // Create blob container
-                    sh "az storage container create --name ${CONTAINER_NAME}"
+                 //   sh "az storage container create --name $AZURE_STORAGE_CONTAINER --account-name $AZURE_STORAGE_ACCOUNT --public-access off"
+                    sh "az storage container create --name ${CONTAINER_NAME}" --account-name $STORAGE_ACCOUNT_NAME --public-access off"
                 }
             }
         }
