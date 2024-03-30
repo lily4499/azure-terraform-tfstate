@@ -12,9 +12,10 @@ pipeline {
     stages {
         stage('Authenticate with Azure') {
             steps {
-                script {
+                script { 
+               //     withCredentials([azureServicePrincipal(${AZURE_CREDENTIALS})]) {
                     azureLogin = azureAzureCLI(
-                        azureCredentialsId: AZURE_CREDENTIALS,
+                        azureCredentialsId: ${AZURE_CREDENTIALS},
                         scriptBlock: '''
                             az login
                         '''
