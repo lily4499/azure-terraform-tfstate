@@ -10,22 +10,18 @@ pipeline {
     }
 
     stages {
-        stage('Authenticate with Azure') {
+
+         stage('Authenticate with Azure') {
             steps {
-                script { 
-               //     withCredentials([azureServicePrincipal(${AZURE_CREDENTIALS})]) {
-                    azureLogin = azureAzureCLI(
-                        azureCredentialsId: ${AZURE_CREDENTIALS},
-                        scriptBlock: '''
-                            az login
-                        '''
-                    )
-                    
-             //       azureLogin(credentialsId: 'lili-acr-credentials-id')
+                script {
+                    // Azure login
+                    withCredentials([azureServicePrincipal('lili-acr-credentials-id')]) {
+                        sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID'
+                    }
                 }
             }
         }
-      
+       
         stage('Create Resource Group and Storage Account') {
             steps {
                 script {
