@@ -2,6 +2,7 @@ pipeline {
     agent any
     
     environment {
+        AZURE_CREDENTIALS = credentials('lili-acr-credentials-id')
         RESOURCE_GROUP_NAME = 'lilirg'
         STORAGE_ACCOUNT_NAME = 'lilisa'
         CONTAINER_NAME = 'lilict'
@@ -12,7 +13,14 @@ pipeline {
         stage('Authenticate with Azure') {
             steps {
                 script {
-                    azureLogin(credentialsId: 'lili-acr-credentials-id')
+                    azureLogin = azureAzureCLI(
+                        azureCredentialsId: AZURE_CREDENTIALS,
+                        scriptBlock: '''
+                            az login
+                        '''
+                    )
+                    
+             //       azureLogin(credentialsId: 'lili-acr-credentials-id')
                 }
             }
         }
